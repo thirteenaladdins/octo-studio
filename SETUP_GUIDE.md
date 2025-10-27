@@ -1,4 +1,4 @@
-# Art Generation Studio - Setup Guide
+# Octo Studio - Setup Guide
 
 This is the **art generation** repository that creates artworks using templates and AI.
 
@@ -35,7 +35,7 @@ This is the **art generation** repository that creates artworks using templates 
 ## Project Structure
 
 ```
-art-generation-studio/
+octo-studio/
 ├── templates/           # P5.js template definitions
 ├── services/            # Generation services (AI, screenshots, Twitter)
 ├── schemas/            # JSON schemas for templates
@@ -59,7 +59,7 @@ art-generation-studio/
 
 ## Separate Repositories
 
-- **This repo** (`art-generation-studio`) - Creates artworks
+- **This repo** (`octo-studio`) - Creates artworks
 - **Gallery app** (`literate-octo-enigma`) - Displays artworks
 
 The two repos are independent - you can develop templates here without affecting the gallery.

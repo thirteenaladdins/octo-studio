@@ -1,4 +1,4 @@
-# Art Generation Studio
+# Octo Studio
 
 AI-powered daily artwork generator using templates and OpenAI.
 
