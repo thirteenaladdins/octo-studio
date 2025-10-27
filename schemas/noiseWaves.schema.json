@@ -1,0 +1,56 @@
+{
+  "title": "Noise Waves v1",
+  "type": "object",
+  "properties": {
+    "seed": { "type": "integer", "minimum": 1, "default": 19 },
+    "frequency": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 5,
+      "default": 1.2
+    },
+    "amplitude": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 200,
+      "default": 60
+    },
+    "bands": { "type": "integer", "minimum": 1, "maximum": 12, "default": 6 },
+    "speed": {
+      "type": "number",
+      "minimum": 0.001,
+      "maximum": 0.05,
+      "default": 0.01
+    },
+    "lineWeight": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 6,
+      "default": 2
+    },
+    "fade": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.08 },
+    "background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{6})$",
+      "default": "#0b0b12"
+    },
+    "palette": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^#([0-9a-fA-F]{6})$" },
+      "minItems": 3,
+      "maxItems": 5,
+      "default": ["#90e0ef", "#48cae4", "#00b4d8", "#03045e"]
+    }
+  },
+  "required": [
+    "seed",
+    "frequency",
+    "amplitude",
+    "bands",
+    "speed",
+    "lineWeight",
+    "fade",
+    "background",
+    "palette"
+  ]
+}

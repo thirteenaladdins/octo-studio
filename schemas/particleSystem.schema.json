@@ -1,0 +1,66 @@
+{
+  "title": "Particle System v1",
+  "type": "object",
+  "properties": {
+    "seed": { "type": "integer", "minimum": 1, "default": 13 },
+    "numParticles": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 5000,
+      "default": 800
+    },
+    "maxSpeed": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 10,
+      "default": 2.5
+    },
+    "cohesion": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2,
+      "default": 0.5
+    },
+    "separation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2,
+      "default": 0.6
+    },
+    "alignment": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2,
+      "default": 0.6
+    },
+    "trailFade": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.08
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{6})$",
+      "default": "#0a0a0e"
+    },
+    "palette": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^#([0-9a-fA-F]{6})$" },
+      "minItems": 3,
+      "maxItems": 5,
+      "default": ["#ffbe0b", "#fb5607", "#ff006e", "#8338ec"]
+    }
+  },
+  "required": [
+    "seed",
+    "numParticles",
+    "maxSpeed",
+    "cohesion",
+    "separation",
+    "alignment",
+    "trailFade",
+    "background",
+    "palette"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "art-generation-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-powered daily artwork generator with templates",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "openai": "^4.77.0",
+    "puppeteer": "^23.11.1",
+    "twitter-api-v2": "^1.17.2"
+  },
+  "scripts": {
+    "generate": "node generate.js",
+    "generate:dry": "node generate.js --dry-run",
+    "export": "node export.js"
+  }
+}

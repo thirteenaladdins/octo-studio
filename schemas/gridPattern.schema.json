@@ -1,0 +1,48 @@
+{
+  "title": "Grid Pattern v1",
+  "type": "object",
+  "properties": {
+    "seed": { "type": "integer", "minimum": 1, "default": 37 },
+    "gridSize": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 60,
+      "default": 20
+    },
+    "speed": {
+      "type": "number",
+      "minimum": 0.001,
+      "maximum": 0.05,
+      "default": 0.012
+    },
+    "fade": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.08 },
+    "jitter": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.25 },
+    "shape": {
+      "type": "string",
+      "enum": ["circle", "rect", "triangle"],
+      "default": "rect"
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{6})$",
+      "default": "#1f1f24"
+    },
+    "palette": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^#([0-9a-fA-F]{6})$" },
+      "minItems": 3,
+      "maxItems": 5,
+      "default": ["#06d6a0", "#ffd166", "#ef476f", "#118ab2"]
+    }
+  },
+  "required": [
+    "seed",
+    "gridSize",
+    "speed",
+    "fade",
+    "jitter",
+    "shape",
+    "background",
+    "palette"
+  ]
+}
