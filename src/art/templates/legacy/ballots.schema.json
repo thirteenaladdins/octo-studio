@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ballots Template",
+  "description": "Subdivided grid with layered strokes, inspired by Kjetil Golid",
+  "type": "object",
+  "properties": {
+    "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9999,
+      "default": 42,
+      "description": "Random seed for reproducibility"
+    },
+    "gridSize": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 10,
+      "default": 5,
+      "description": "Grid cells per row/column"
+    },
+    "subdivisions": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 12,
+      "default": 5,
+      "description": "Subdivisions per cell"
+    },
+    "rotation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "default": 8,
+      "description": "Max rotation angle in degrees"
+    },
+    "strokeCount": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 30,
+      "default": 12,
+      "description": "Number of strokes per subdivision"
+    },
+    "strokeWeight": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 3,
+      "default": 0.8,
+      "description": "Stroke thickness"
+    },
+    "strokeAlpha": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 100,
+      "default": 40,
+      "description": "Stroke transparency (10-100)"
+    },
+    "waveAmount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 0.1,
+      "default": 0.02,
+      "description": "Horizontal wave distortion"
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "default": "#FAFAFA",
+      "description": "Background color (hex)"
+    },
+    "palette": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      },
+      "default": ["#1a1a1a", "#4a4a4a", "#7a7a7a"],
+      "description": "Color palette (hex colors)"
+    }
+  },
+  "required": ["seed", "gridSize", "palette"]
+}
+

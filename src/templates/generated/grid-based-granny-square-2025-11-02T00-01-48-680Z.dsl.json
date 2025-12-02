@@ -1,0 +1,93 @@
+{
+  "id": "grid-based-granny-square",
+  "description": "Geometric precision in a grid layout mimicking granny square patterns with sharp angles and defined edges.",
+  "canvas": {
+    "w": 1024,
+    "h": 1024,
+    "bg": "#1a1a2e"
+  },
+  "palette": [
+    "#4a4e69",
+    "#9a8c98",
+    "#f2e9e4",
+    "#22223b"
+  ],
+  "layers": [
+    {
+      "type": "orbitals",
+      "count": 300,
+      "radiusMin": 80,
+      "radiusMax": 400,
+      "orbitSpeed": 0.02,
+      "shapeSize": 20,
+      "attractors": [
+        {
+          "x": 0.2,
+          "y": 0.2,
+          "strength": 1.5
+        },
+        {
+          "x": 0.8,
+          "y": 0.8,
+          "strength": 1.5
+        },
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "strength": 2
+        },
+        {
+          "x": 0.25,
+          "y": 0.75,
+          "strength": 1.2
+        },
+        {
+          "x": 0.75,
+          "y": 0.25,
+          "strength": 1.2
+        }
+      ]
+    }
+  ],
+  "claims": {
+    "dominant_hues": [
+      "dark grey",
+      "beige",
+      "off-white"
+    ],
+    "symmetry": "med",
+    "flow": "low",
+    "density": 0.6,
+    "motifs": [
+      "geometric",
+      "squares",
+      "grid"
+    ]
+  },
+  "knobs": [
+    {
+      "key": "orbitSpeed",
+      "effect": "Faster speeds create more dynamic motion within the grid",
+      "range": [
+        0.01,
+        0.04
+      ]
+    },
+    {
+      "key": "count",
+      "effect": "More particles create denser patterns within the grid",
+      "range": [
+        150,
+        350
+      ]
+    },
+    {
+      "key": "radiusMax",
+      "effect": "Larger radius allows shapes to spread further across the canvas",
+      "range": [
+        200,
+        600
+      ]
+    }
+  ]
+}

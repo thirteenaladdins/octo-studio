@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Geometric Grid Template",
+  "description": "Grid-based composition with geometric shapes, distortions, and color variations (inspired by Kjetil Golid)",
+  "type": "object",
+  "properties": {
+    "seed": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9999,
+      "default": 42,
+      "description": "Random seed for reproducibility"
+    },
+    "gridSize": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 20,
+      "default": 8,
+      "description": "Number of cells per row/column"
+    },
+    "distortion": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.3,
+      "description": "Noise-based position distortion (0-1)"
+    },
+    "rotation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 90,
+      "default": 30,
+      "description": "Max rotation angle in degrees"
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "default": "#FAFAFA",
+      "description": "Background color (hex)"
+    },
+    "palette": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      },
+      "default": ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A"],
+      "description": "Color palette (hex colors)"
+    }
+  },
+  "required": ["seed", "gridSize", "palette"]
+}
+
+

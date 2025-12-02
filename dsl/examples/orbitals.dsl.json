@@ -1,0 +1,71 @@
+{
+  "id": "orbital-attractors",
+  "description": "Multi-center orbital motion with gravitational attractors creating swirling particle systems",
+  "canvas": {
+    "w": 1024,
+    "h": 1024,
+    "bg": "#1a1a2e"
+  },
+  "palette": ["#16213e", "#0f3460", "#533483", "#e94560", "#f39c12"],
+  "layers": [
+    {
+      "type": "orbitals",
+      "count": 180,
+      "radiusMin": 80,
+      "radiusMax": 400,
+      "orbitSpeed": 0.015,
+      "shapeSize": 18,
+      "attractors": [
+        {
+          "x": 0.3,
+          "y": 0.3,
+          "strength": 1.2
+        },
+        {
+          "x": 0.7,
+          "y": 0.7,
+          "strength": 0.8
+        },
+        {
+          "x": 0.5,
+          "y": 0.2,
+          "strength": 1.5
+        }
+      ]
+    },
+    {
+      "type": "noiseOverlay",
+      "opacity": 0.15,
+      "scale": 0.003
+    }
+  ],
+  "claims": {
+    "dominant_hues": ["purple", "crimson", "amber"],
+    "symmetry": "med",
+    "flow": "med",
+    "density": 0.5,
+    "motifs": ["orbits", "attractors", "swirls"]
+  },
+  "knobs": [
+    {
+      "key": "orbitSpeed",
+      "effect": "Faster orbital motion creates more dynamic movement",
+      "range": [0.005, 0.03]
+    },
+    {
+      "key": "count",
+      "effect": "More particles create denser orbital patterns",
+      "range": [100, 300]
+    },
+    {
+      "key": "radiusMax",
+      "effect": "Larger radius creates wider orbital ranges",
+      "range": [200, 500]
+    },
+    {
+      "key": "shapeSize",
+      "effect": "Larger shapes create more prominent particles",
+      "range": [8, 32]
+    }
+  ]
+}

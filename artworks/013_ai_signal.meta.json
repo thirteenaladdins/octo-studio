@@ -1,0 +1,50 @@
+{
+  "id": "013",
+  "seed": 1111633252,
+  "timestamp": "2025-11-26T22:21:52.287Z",
+  "concept": {
+    "title": "Luminous Echoes",
+    "template": "flowField",
+    "description": "An enchanting dance of particles, reminiscent of ethereal blossoms unfurling and tracing delicate paths in the air.",
+    "mood": "mystical, whimsical",
+    "shapes": [
+      "circle",
+      "ellipse"
+    ],
+    "colors": [
+      "#6A0572",
+      "#9D50B0",
+      "#EAB8E4",
+      "#FFD1DC"
+    ],
+    "movement": "swirling clusters with radiant trails fading away",
+    "density": 78,
+    "hashtags": [
+      "#ParticleDance",
+      "#Whimsical",
+      "#Ethereal"
+    ]
+  },
+  "config": {
+    "seed": 6,
+    "speed": 0.035,
+    "density": 132,
+    "steps": 52,
+    "noiseScale": 0.021,
+    "strokeWeight": 5.553,
+    "strokeSaturation": 30.948,
+    "strokeBrightness": 89.004,
+    "strokeAlpha": 89.296,
+    "background": "#26262b",
+    "palette": [
+      "#ff7a7a",
+      "#ffd166",
+      "#70d6ff",
+      "#bdb2ff"
+    ],
+    "template": "flowField"
+  },
+  "model": "gpt-4o-mini",
+  "temperature": 0.95,
+  "presencePenalty": 0.8
+}

@@ -1,0 +1,48 @@
+{
+  "id": "008",
+  "seed": 1023787229,
+  "timestamp": "2025-11-25T21:57:44.438Z",
+  "concept": {
+    "title": "Energized Fractals",
+    "template": "lightning",
+    "description": "An explosive visual journey through vibrant streams that mimic the unpredictable nature of electricity and energy flow.",
+    "mood": "intense, electrifying",
+    "shapes": [
+      "line",
+      "curve"
+    ],
+    "colors": [
+      "#FFC300",
+      "#FF5733",
+      "#C70039",
+      "#900C3F"
+    ],
+    "movement": "dynamic bursts of energy resembling lightning strikes",
+    "density": 80,
+    "hashtags": [
+      "#Lightning",
+      "#Energetic",
+      "#Abstract"
+    ]
+  },
+  "config": {
+    "seed": 4,
+    "count": 513,
+    "step": 1.244,
+    "noiseScale": 0.01,
+    "zSpeed": 0.002,
+    "strokeWeight": 1.413,
+    "strokeAlpha": 39.147,
+    "background": "#001f3f",
+    "palette": [
+      "#0074D9",
+      "#39CCCC",
+      "#2ECC40",
+      "#FF4136"
+    ],
+    "template": "lightning"
+  },
+  "model": "gpt-4o-mini",
+  "temperature": 0.95,
+  "presencePenalty": 0.8
+}

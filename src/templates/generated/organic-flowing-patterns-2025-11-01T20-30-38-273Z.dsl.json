@@ -1,0 +1,80 @@
+{
+  "id": "organic-flowing-patterns",
+  "description": "Organic flowing patterns with high contrast, utilizing a vibrant blue and green color palette to create depth and movement.",
+  "canvas": {
+    "w": 1024,
+    "h": 1024,
+    "bg": "#001f3f"
+  },
+  "palette": [
+    "#0074D9",
+    "#39CCCC",
+    "#2ECC40",
+    "#FF4136"
+  ],
+  "layers": [
+    {
+      "type": "flowField",
+      "count": 600,
+      "step": 2.5,
+      "strokeAlpha": 45,
+      "noise": {
+        "scale": 0.015,
+        "zSpeed": 0.0008
+      }
+    },
+    {
+      "type": "grain",
+      "amount": 0.03,
+      "size": 1.5
+    }
+  ],
+  "claims": {
+    "dominant_hues": [
+      "blue",
+      "green"
+    ],
+    "symmetry": "low",
+    "flow": "high",
+    "density": 0.6,
+    "motifs": [
+      "flow",
+      "organic",
+      "contrast"
+    ]
+  },
+  "knobs": [
+    {
+      "key": "noiseScale",
+      "effect": "Higher values create more intricate, chaotic patterns",
+      "range": [
+        0.005,
+        0.02
+      ]
+    },
+    {
+      "key": "step",
+      "effect": "Larger steps create broader, more sweeping movements",
+      "range": [
+        1,
+        3
+      ]
+    },
+    {
+      "key": "count",
+      "effect": "Increasing count leads to denser pattern formations",
+      "range": [
+        300,
+        700
+      ]
+    },
+    {
+      "key": "strokeAlpha",
+      "effect": "Adjusting alpha influences the visibility of the flowing lines",
+      "range": [
+        20,
+        60
+      ]
+    }
+  ]
+}

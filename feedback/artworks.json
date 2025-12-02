@@ -1,0 +1,348 @@
+{
+  "artworks": [
+    {
+      "id": "pipeline_1764708510349",
+      "timestamp": "2025-12-02T20:48:33.312Z",
+      "title": "Pipeline 1764708510349",
+      "description": "Pipeline artwork with grid positioning, palette coloring",
+      "template": "pipeline",
+      "seed": 1624436155,
+      "config": {
+        "seed": 1624436155,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 22,
+        "speed": 0.005122184753474866,
+        "shape": "triangle",
+        "palette": [
+          "#cdb4db",
+          "#ffc8dd",
+          "#ffafcc",
+          "#bde0fe",
+          "#a2d2ff"
+        ],
+        "background": "#6222ef",
+        "modules": {
+          "positioning": "grid",
+          "sizing": "sizing",
+          "coloring": "palette",
+          "transformation": "transform",
+          "rendering": "shape"
+        }
+      },
+      "pipeline": [
+        "generateGrid",
+        "applySizing",
+        "applyPalette",
+        "applyTransform",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764708510349.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764708655291",
+      "timestamp": "2025-12-02T20:50:57.638Z",
+      "title": "Pipeline 1764708655291",
+      "description": "Pipeline artwork with grid positioning, palette coloring",
+      "template": "pipeline",
+      "seed": 1624581096,
+      "config": {
+        "seed": 1624581096,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 22,
+        "speed": 0.006411247254075133,
+        "shape": "triangle",
+        "palette": [
+          "#ff7b00",
+          "#ff8800",
+          "#ff9500",
+          "#ffa200",
+          "#ffaa00"
+        ],
+        "background": "#4307d5",
+        "modules": {
+          "positioning": "grid",
+          "sizing": "sizing",
+          "coloring": "palette",
+          "transformation": "transform",
+          "rendering": "shape"
+        }
+      },
+      "pipeline": [
+        "generateGrid",
+        "applySizing",
+        "applyPalette",
+        "applyTransform",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764708655291.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764709012474",
+      "timestamp": "2025-12-02T20:56:55.077Z",
+      "title": "Pipeline 1764709012474",
+      "description": "Pipeline artwork with grid positioning, palette coloring",
+      "template": "pipeline",
+      "seed": 1624938276,
+      "config": {
+        "seed": 1624938276,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 23,
+        "speed": 0.023484001168275252,
+        "shape": "rect",
+        "palette": [
+          "#cdb4db",
+          "#ffc8dd",
+          "#ffafcc",
+          "#bde0fe",
+          "#a2d2ff"
+        ],
+        "background": "#d1a89f",
+        "modules": {
+          "positioning": "grid",
+          "sizing": "sizing",
+          "coloring": "palette",
+          "transformation": "transform",
+          "rendering": "shape"
+        }
+      },
+      "pipeline": [
+        "generateGrid",
+        "applySizing",
+        "applyPalette",
+        "applyTransform",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764709012474.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764709670384",
+      "timestamp": "2025-12-02T21:07:53.035Z",
+      "title": "Pipeline 1764709670384",
+      "description": "Pipeline artwork with grid positioning, palette coloring",
+      "template": "pipeline",
+      "seed": 1625596188,
+      "config": {
+        "seed": 1625596188,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 15,
+        "speed": 0.02264415741788417,
+        "shape": "rect",
+        "palette": [
+          "#ff7b00",
+          "#ff8800",
+          "#ff9500",
+          "#ffa200",
+          "#ffaa00"
+        ],
+        "background": "#56613f",
+        "modules": {
+          "positioning": "grid",
+          "sizing": "sizing",
+          "coloring": "palette",
+          "transformation": "transform",
+          "rendering": "shape"
+        },
+        "_genome": {
+          "setup": "default",
+          "background": "none",
+          "context": "time",
+          "traversal": "random",
+          "positioning": "spiral",
+          "sizing": "pulse",
+          "coloring": "index",
+          "rendering": "rect",
+          "transform": "noiseOffset"
+        }
+      },
+      "pipeline": [
+        "generateGrid",
+        "applySizing",
+        "applyPalette",
+        "applyTransform",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764709670384.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764711295305",
+      "timestamp": "2025-12-02T21:34:58.096Z",
+      "title": "Pipeline 1764711295305",
+      "description": "Pipeline artwork with spiral positioning, noise coloring",
+      "template": "pipeline",
+      "seed": 1627221108,
+      "config": {
+        "seed": 1627221108,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 22,
+        "speed": 0.015927848821006646,
+        "shape": "circle",
+        "palette": [
+          "#264653",
+          "#2a9d8f",
+          "#e9c46a",
+          "#f4a261",
+          "#e76f51"
+        ],
+        "background": "#2bc93f",
+        "modules": {
+          "positioning": "spiral",
+          "sizing": "constant",
+          "coloring": "noise",
+          "transformation": null,
+          "rendering": "shape"
+        },
+        "_genome": {
+          "setup": "default",
+          "background": "none",
+          "context": "time",
+          "traversal": "random",
+          "positioning": "spiral",
+          "sizing": "constant",
+          "coloring": "noise",
+          "rendering": "circle",
+          "transform": "none"
+        }
+      },
+      "pipeline": [
+        "spiral",
+        "constant",
+        "noiseColor",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764711295305.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764711319429",
+      "timestamp": "2025-12-02T21:35:21.502Z",
+      "title": "Pipeline 1764711319429",
+      "description": "Pipeline artwork with flowGrid positioning, gradient coloring",
+      "template": "pipeline",
+      "seed": 1627245231,
+      "config": {
+        "seed": 1627245231,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 21,
+        "speed": 0.005224723816022614,
+        "shape": "circle",
+        "palette": [
+          "#cdb4db",
+          "#ffc8dd",
+          "#ffafcc",
+          "#bde0fe",
+          "#a2d2ff"
+        ],
+        "background": "#d6c93f",
+        "modules": {
+          "positioning": "flowGrid",
+          "sizing": "distance",
+          "coloring": "gradient",
+          "transformation": "noiseOffset",
+          "rendering": "shape"
+        },
+        "_genome": {
+          "setup": "default",
+          "background": "solid",
+          "context": "mouse",
+          "traversal": "column",
+          "positioning": "flowGrid",
+          "sizing": "distance",
+          "coloring": "gradient",
+          "rendering": "shape",
+          "transform": "noiseOffset"
+        }
+      },
+      "pipeline": [
+        "flowGrid",
+        "distance",
+        "gradient",
+        "noiseOffset",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764711319429.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    },
+    {
+      "id": "pipeline_1764711364310",
+      "timestamp": "2025-12-02T21:36:06.465Z",
+      "title": "Pipeline 1764711364310",
+      "description": "Pipeline artwork with flowGrid positioning, palette coloring",
+      "template": "pipeline",
+      "seed": 1627290115,
+      "config": {
+        "seed": 1627290115,
+        "width": 2400,
+        "height": 2400,
+        "gridSize": 10,
+        "speed": 0.015058708791648369,
+        "shape": "triangle",
+        "palette": [
+          "#ffbe0b",
+          "#fb5607",
+          "#ff006e",
+          "#8338ec",
+          "#3a86ff"
+        ],
+        "background": "#925075",
+        "modules": {
+          "positioning": "flowGrid",
+          "sizing": "noise",
+          "coloring": "palette",
+          "transformation": "noiseOffset",
+          "rendering": "shape"
+        },
+        "_genome": {
+          "setup": "inverted",
+          "background": "solid",
+          "context": "time",
+          "traversal": "grid",
+          "positioning": "flowGrid",
+          "sizing": "noise",
+          "coloring": "palette",
+          "rendering": "triangle",
+          "transform": "noiseOffset"
+        }
+      },
+      "pipeline": [
+        "flowGrid",
+        "noise",
+        "applyPalette",
+        "noiseOffset",
+        "applyShape"
+      ],
+      "imagePath": "/Users/mamer/Projects/octo-studio/output/images/pipeline_1764711364310.png",
+      "rating": null,
+      "comment": null,
+      "likedAspects": [],
+      "ratedAt": null
+    }
+  ]
+}

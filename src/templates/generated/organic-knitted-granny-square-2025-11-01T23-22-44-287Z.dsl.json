@@ -1,0 +1,86 @@
+{
+  "id": "organic-knitted-granny-square",
+  "description": "Dynamic granny square patterns inspired by knitted textures, featuring flowing organic shapes and a vibrant blue-green palette.",
+  "canvas": {
+    "w": 1024,
+    "h": 1024,
+    "bg": "#0d1b2a"
+  },
+  "palette": [
+    "#1b2631",
+    "#4a7c92",
+    "#6c9dcf",
+    "#d9d9d9",
+    "#ff6f61"
+  ],
+  "layers": [
+    {
+      "type": "flowField",
+      "count": 500,
+      "step": 2,
+      "strokeAlpha": 50,
+      "widthJitter": [
+        1,
+        5
+      ],
+      "noise": {
+        "scale": 0.008,
+        "zSpeed": 0.001
+      }
+    },
+    {
+      "type": "grain",
+      "amount": 0.03,
+      "size": 1.5
+    }
+  ],
+  "claims": {
+    "dominant_hues": [
+      "blue",
+      "green",
+      "gray"
+    ],
+    "symmetry": "low",
+    "flow": "high",
+    "density": 0.8,
+    "motifs": [
+      "knitted",
+      "granny square",
+      "organic shapes"
+    ]
+  },
+  "knobs": [
+    {
+      "key": "noiseScale",
+      "effect": "Higher values create more intricate flow patterns",
+      "range": [
+        0.005,
+        0.02
+      ]
+    },
+    {
+      "key": "step",
+      "effect": "Larger steps result in broader strokes and shapes",
+      "range": [
+        1.5,
+        3
+      ]
+    },
+    {
+      "key": "count",
+      "effect": "Increased count results in denser patterns",
+      "range": [
+        300,
+        600
+      ]
+    },
+    {
+      "key": "strokeAlpha",
+      "effect": "Increasing alpha enhances visibility and contrast of strokes",
+      "range": [
+        30,
+        70
+      ]
+    }
+  ]
+}

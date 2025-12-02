@@ -1,0 +1,132 @@
+{
+  "dsl": {
+    "id": "granny-square-grid",
+    "description": "Geometric precision grid with a granny square pattern, creating structured and defined visual elements.",
+    "canvas": {
+      "w": 1024,
+      "h": 1024,
+      "bg": "#2e2e2e"
+    },
+    "palette": [
+      "#ff6b6b",
+      "#ffd93d",
+      "#6bcb77",
+      "#4d96ff",
+      "#ffffff"
+    ],
+    "layers": [
+      {
+        "type": "grain",
+        "amount": 0.03,
+        "size": 1.5
+      },
+      {
+        "type": "flowField",
+        "count": 600,
+        "step": 1.5,
+        "strokeAlpha": 45,
+        "noise": {
+          "scale": 0.008,
+          "zSpeed": 0.001
+        }
+      }
+    ],
+    "claims": {
+      "dominant_hues": [
+        "red",
+        "yellow",
+        "green",
+        "blue"
+      ],
+      "symmetry": "med",
+      "flow": "low",
+      "density": 0.3,
+      "motifs": [
+        "grid",
+        "geometric",
+        "squares"
+      ]
+    },
+    "knobs": [
+      {
+        "key": "strokeAlpha",
+        "effect": "Higher alpha increases visibility of geometric edges",
+        "range": [
+          30,
+          60
+        ]
+      },
+      {
+        "key": "count",
+        "effect": "More elements create a denser grid pattern",
+        "range": [
+          400,
+          800
+        ]
+      },
+      {
+        "key": "step",
+        "effect": "Larger steps create more spaced-out patterns",
+        "range": [
+          1,
+          2.5
+        ]
+      },
+      {
+        "key": "noiseScale",
+        "effect": "Higher values introduce more complexity in the grid structure",
+        "range": [
+          0.005,
+          0.02
+        ]
+      }
+    ]
+  },
+  "claims": {
+    "dominant_hues": [
+      "red",
+      "yellow",
+      "green",
+      "blue"
+    ],
+    "symmetry": "med",
+    "flow": "low",
+    "density": 0.3,
+    "motifs": [
+      "grid",
+      "geometric",
+      "squares"
+    ]
+  },
+  "measured": {
+    "blankRatio": 1,
+    "contrast": 0.22337044302765205,
+    "edgeDensity": 0.2750701904296875,
+    "dominantColors": [
+      "#3d3e3b",
+      "#2f2f2f",
+      "#8c8a78",
+      "#58574e",
+      "#29292a"
+    ],
+    "paletteEntropy": 0,
+    "symmetry": 0.9077480681991124,
+    "colorHarmony": 79.11589591572927,
+    "brightness": 0.23445367667403874
+  },
+  "gates": {
+    "notBlank": true,
+    "hasContrast": true,
+    "notPureNoise": true,
+    "renderTimeOK": true,
+    "hasPalette": true,
+    "reasonableBrightness": true,
+    "hasSymmetry": true,
+    "hasHarmony": true,
+    "allPassed": true
+  },
+  "renderTime": 316,
+  "seed": 12345,
+  "timestamp": "2025-11-01T23:37:39.136Z",
+  "version": "1.0.0"
+}

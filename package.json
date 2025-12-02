@@ -4,14 +4,27 @@
   "private": true,
   "description": "AI-powered daily artwork generator with templates",
   "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "express": "^5.1.0",
     "openai": "^4.77.0",
     "puppeteer": "^23.11.1",
+    "sharp": "^0.33.5",
     "twitter-api-v2": "^1.17.2"
   },
   "scripts": {
-    "generate": "node generate.js",
-    "generate:dry": "node generate.js --dry-run",
-    "export": "node export.js"
+    "start": "node server.js",
+    "generate": "node services/generateDailyArtwork.js",
+    "generate:dry": "node services/generateDailyArtwork.js --dry-run",
+    "export": "node export.js",
+    "create-template": "node tools/create-template.js",
+    "export-template": "node tools/export-template.js",
+    "generate-manifest": "node tools/generate-template-manifest.js",
+    "bundle-modules": "node scripts/bundle-modules.js",
+    "view-template": "python3 -m http.server 8000 || php -S localhost:8000 || echo 'Please install Python 3 or PHP to run the viewer'"
   }
 }

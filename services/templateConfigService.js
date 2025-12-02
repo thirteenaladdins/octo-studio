@@ -1,33 +1,19 @@
 const path = require("path");
 
-// Load JSON Schemas from schemas directory
-const flowFieldSchema = require(path.join(
+// Load JSON Schemas defined for the web tuner and reuse them here
+const gridPatternModularSchema = require(path.join(
   __dirname,
-  "../schemas/flowField.schema.json"
-));
-const gridPatternSchema = require(path.join(
-  __dirname,
-  "../schemas/gridPattern.schema.json"
+  "../src/art/templates/gridPatternModular.schema.json"
 ));
 const noiseWavesSchema = require(path.join(
   __dirname,
-  "../schemas/noiseWaves.schema.json"
-));
-const orbitalMotionSchema = require(path.join(
-  __dirname,
-  "../schemas/orbitalMotion.schema.json"
-));
-const particleSystemSchema = require(path.join(
-  __dirname,
-  "../schemas/particleSystem.schema.json"
+  "../src/art/templates/noiseWaves.schema.json"
 ));
 
 const TEMPLATE_TO_SCHEMA = {
-  flowField: flowFieldSchema,
-  gridPattern: gridPatternSchema,
+  gridPattern: gridPatternModularSchema,
+  simpleModular: gridPatternModularSchema, // Uses same schema as gridPattern
   noiseWaves: noiseWavesSchema,
-  orbitalMotion: orbitalMotionSchema,
-  particleSystem: particleSystemSchema,
 };
 
 function mulberry32(seed) {
@@ -98,6 +84,17 @@ function generateRandomConfig(template, seed) {
           .toString(16)
           .padStart(6, "0")}`;
       }
+    } else if (prop.type === "object" && prop.properties) {
+      // Handle nested objects (e.g., modules)
+      const nestedCfg = buildDefaults(prop);
+      for (const [nestedKey, nestedProp] of Object.entries(prop.properties)) {
+        if (nestedProp.enum) {
+          nestedCfg[nestedKey] = pickRandom(rng, nestedProp.enum);
+        } else if (nestedProp.default !== undefined) {
+          nestedCfg[nestedKey] = nestedProp.default;
+        }
+      }
+      cfg[key] = nestedCfg;
     }
   }
 

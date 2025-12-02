@@ -1,0 +1,134 @@
+{
+  "dsl": {
+    "id": "organic-knitted-granny-square",
+    "description": "Dynamic granny square patterns inspired by knitted textures, featuring flowing organic shapes and a vibrant blue-green palette.",
+    "canvas": {
+      "w": 1024,
+      "h": 1024,
+      "bg": "#0d1b2a"
+    },
+    "palette": [
+      "#1b2631",
+      "#4a7c92",
+      "#6c9dcf",
+      "#d9d9d9",
+      "#ff6f61"
+    ],
+    "layers": [
+      {
+        "type": "flowField",
+        "count": 500,
+        "step": 2,
+        "strokeAlpha": 50,
+        "widthJitter": [
+          1,
+          5
+        ],
+        "noise": {
+          "scale": 0.008,
+          "zSpeed": 0.001
+        }
+      },
+      {
+        "type": "grain",
+        "amount": 0.03,
+        "size": 1.5
+      }
+    ],
+    "claims": {
+      "dominant_hues": [
+        "blue",
+        "green",
+        "gray"
+      ],
+      "symmetry": "low",
+      "flow": "high",
+      "density": 0.8,
+      "motifs": [
+        "knitted",
+        "granny square",
+        "organic shapes"
+      ]
+    },
+    "knobs": [
+      {
+        "key": "noiseScale",
+        "effect": "Higher values create more intricate flow patterns",
+        "range": [
+          0.005,
+          0.02
+        ]
+      },
+      {
+        "key": "step",
+        "effect": "Larger steps result in broader strokes and shapes",
+        "range": [
+          1.5,
+          3
+        ]
+      },
+      {
+        "key": "count",
+        "effect": "Increased count results in denser patterns",
+        "range": [
+          300,
+          600
+        ]
+      },
+      {
+        "key": "strokeAlpha",
+        "effect": "Increasing alpha enhances visibility and contrast of strokes",
+        "range": [
+          30,
+          70
+        ]
+      }
+    ]
+  },
+  "claims": {
+    "dominant_hues": [
+      "blue",
+      "green",
+      "gray"
+    ],
+    "symmetry": "low",
+    "flow": "high",
+    "density": 0.8,
+    "motifs": [
+      "knitted",
+      "granny square",
+      "organic shapes"
+    ]
+  },
+  "measured": {
+    "blankRatio": 1,
+    "contrast": 0.20806362709098156,
+    "edgeDensity": 0.241424560546875,
+    "dominantColors": [
+      "#101d2c",
+      "#414858",
+      "#242f3e",
+      "#0b1928",
+      "#79727f"
+    ],
+    "paletteEntropy": 0,
+    "symmetry": 0.9191148245091664,
+    "colorHarmony": 78.34426387559877,
+    "brightness": 0.14703973202125697
+  },
+  "gates": {
+    "notBlank": true,
+    "hasContrast": true,
+    "notPureNoise": true,
+    "renderTimeOK": true,
+    "hasPalette": true,
+    "reasonableBrightness": true,
+    "hasSymmetry": true,
+    "hasHarmony": true,
+    "allPassed": true
+  },
+  "renderTime": 320,
+  "seed": 12345,
+  "timestamp": "2025-11-01T23:22:44.297Z",
+  "version": "1.0.0"
+}

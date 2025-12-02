@@ -1,0 +1,215 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Generative Art DSL Schema",
+  "description": "Schema for declarative generative art templates",
+  "required": [
+    "id",
+    "description",
+    "canvas",
+    "palette",
+    "layers",
+    "claims",
+    "knobs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Unique template identifier in kebab-case"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 15,
+      "maxLength": 150,
+      "description": "Human-readable description of the template"
+    },
+    "canvas": {
+      "type": "object",
+      "required": ["w", "h", "bg"],
+      "properties": {
+        "w": { "type": "integer", "const": 1024 },
+        "h": { "type": "integer", "const": 1024 },
+        "bg": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "Background color in hex format"
+        }
+      },
+      "additionalProperties": false
+    },
+    "palette": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$"
+      },
+      "description": "Array of hex colors for the palette"
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "FlowField Layer",
+            "required": ["type", "count", "step", "strokeAlpha", "noise"],
+            "properties": {
+              "type": { "const": "flowField" },
+              "count": { "type": "integer", "minimum": 50, "maximum": 800 },
+              "step": { "type": "number", "minimum": 0.8, "maximum": 3.0 },
+              "strokeAlpha": { "type": "number", "minimum": 15, "maximum": 60 },
+              "widthJitter": {
+                "type": "array",
+                "items": { "type": "number", "minimum": 0.5, "maximum": 6.0 },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "noise": {
+                "type": "object",
+                "required": ["scale", "zSpeed"],
+                "properties": {
+                  "scale": {
+                    "type": "number",
+                    "minimum": 0.001,
+                    "maximum": 0.02
+                  },
+                  "zSpeed": {
+                    "type": "number",
+                    "minimum": 0.0001,
+                    "maximum": 0.002
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "title": "Orbitals Layer",
+            "required": ["type", "count", "radiusMin", "radiusMax"],
+            "properties": {
+              "type": { "const": "orbitals" },
+              "count": { "type": "integer", "minimum": 20, "maximum": 400 },
+              "radiusMin": { "type": "number", "minimum": 40, "maximum": 200 },
+              "radiusMax": { "type": "number", "minimum": 200, "maximum": 600 },
+              "orbitSpeed": {
+                "type": "number",
+                "minimum": 0.005,
+                "maximum": 0.05
+              },
+              "shapeSize": { "type": "number", "minimum": 8, "maximum": 32 },
+              "attractors": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 5,
+                "items": {
+                  "type": "object",
+                  "required": ["x", "y", "strength"],
+                  "properties": {
+                    "x": { "type": "number", "minimum": 0, "maximum": 1 },
+                    "y": { "type": "number", "minimum": 0, "maximum": 1 },
+                    "strength": {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 2.0
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "title": "Grain Layer",
+            "required": ["type", "amount"],
+            "properties": {
+              "type": { "const": "grain" },
+              "amount": { "type": "number", "minimum": 0.01, "maximum": 0.05 },
+              "size": { "type": "number", "minimum": 0.5, "maximum": 2.0 }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "title": "Noise Overlay Layer",
+            "required": ["type", "opacity"],
+            "properties": {
+              "type": { "const": "noiseOverlay" },
+              "opacity": { "type": "number", "minimum": 0.05, "maximum": 0.3 },
+              "scale": { "type": "number", "minimum": 0.001, "maximum": 0.01 }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "description": "Array of rendering layers"
+    },
+    "claims": {
+      "type": "object",
+      "required": ["dominant_hues", "symmetry", "flow", "density", "motifs"],
+      "properties": {
+        "dominant_hues": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": { "type": "string" },
+          "description": "Primary color names (e.g., 'teal', 'amber')"
+        },
+        "symmetry": {
+          "type": "string",
+          "enum": ["low", "med", "high"],
+          "description": "Expected symmetry level"
+        },
+        "flow": {
+          "type": "string",
+          "enum": ["low", "med", "high"],
+          "description": "Expected flow/movement level"
+        },
+        "density": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Expected visual density (0=sparse, 1=dense)"
+        },
+        "motifs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": { "type": "string" },
+          "description": "Visual motifs (e.g., 'ribbons', 'vortices', 'particles')"
+        }
+      },
+      "additionalProperties": false
+    },
+    "knobs": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["key", "effect"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9]*$" },
+          "effect": { "type": "string", "minLength": 10, "maxLength": 80 },
+          "range": {
+            "type": "array",
+            "items": { "type": "number" },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "Exposed parameters with descriptions"
+    }
+  },
+  "additionalProperties": false
+}

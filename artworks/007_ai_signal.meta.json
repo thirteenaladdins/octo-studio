@@ -1,0 +1,49 @@
+{
+  "id": "007",
+  "seed": 1023680175,
+  "timestamp": "2025-11-25T21:55:58.164Z",
+  "concept": {
+    "title": "Kaleidoscope Surge",
+    "template": "particleSystem",
+    "description": "A vibrant assembly of particles swirling together, capturing the essence of energetic motion and playful chaos.",
+    "mood": "energetic, lively",
+    "shapes": [
+      "circle",
+      "ellipse",
+      "triangle"
+    ],
+    "colors": [
+      "#FFB3BA",
+      "#FF677D",
+      "#D4A5A5",
+      "#392F5A"
+    ],
+    "movement": "particles gently swirl and collide, creating a dynamic dance of colors",
+    "density": 80,
+    "hashtags": [
+      "#ParticleArt",
+      "#Dynamic",
+      "#Colorful"
+    ]
+  },
+  "config": {
+    "seed": 10,
+    "numParticles": 2896,
+    "maxSpeed": 4.582,
+    "cohesion": 1.223,
+    "separation": 1.703,
+    "alignment": 0.504,
+    "trailFade": 0.877,
+    "background": "#0a0a0e",
+    "palette": [
+      "#ffbe0b",
+      "#fb5607",
+      "#ff006e",
+      "#8338ec"
+    ],
+    "template": "particleSystem"
+  },
+  "model": "gpt-4o-mini",
+  "temperature": 0.95,
+  "presencePenalty": 0.8
+}

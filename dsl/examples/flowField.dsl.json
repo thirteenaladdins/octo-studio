@@ -1,0 +1,57 @@
+{
+  "id": "flow-field-ribbons",
+  "description": "Flowing ribbons with noise-driven curves creating organic, wave-like patterns across the canvas",
+  "canvas": {
+    "w": 1024,
+    "h": 1024,
+    "bg": "#0a0a0f"
+  },
+  "palette": ["#06d6a0", "#ffd166", "#ef476f", "#118ab2", "#f77f00"],
+  "layers": [
+    {
+      "type": "flowField",
+      "count": 450,
+      "step": 1.8,
+      "strokeAlpha": 55,
+      "widthJitter": [1, 4],
+      "noise": {
+        "scale": 0.004,
+        "zSpeed": 0.0005
+      }
+    },
+    {
+      "type": "grain",
+      "amount": 0.02,
+      "size": 1.2
+    }
+  ],
+  "claims": {
+    "dominant_hues": ["teal", "amber", "coral"],
+    "symmetry": "low",
+    "flow": "high",
+    "density": 0.7,
+    "motifs": ["ribbons", "waves", "flow"]
+  },
+  "knobs": [
+    {
+      "key": "noiseScale",
+      "effect": "Higher values create tighter, more chaotic curls",
+      "range": [0.002, 0.01]
+    },
+    {
+      "key": "step",
+      "effect": "Larger steps create longer, more extended ribbons",
+      "range": [1.0, 3.0]
+    },
+    {
+      "key": "count",
+      "effect": "More particles create denser, more complex patterns",
+      "range": [200, 600]
+    },
+    {
+      "key": "strokeAlpha",
+      "effect": "Higher alpha creates more opaque, visible strokes",
+      "range": [25, 80]
+    }
+  ]
+}

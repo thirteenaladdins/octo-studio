@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Template Viewer - Octo Studio</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #0a0a0f;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      width: 100%;
+    }
+    
+    button {
+      padding: 10px 20px;
+      background: #0074D9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #0056b3;
+    }
+    
+    button:active {
+      transform: scale(0.98);
+    }
+    
+    input[type="number"] {
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 5px;
+      width: 100px;
+      font-size: 14px;
+    }
+    
+    label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    select {
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      min-width: 300px;
+    }
+    
+    select:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    select option {
+      background: #1a1a2e;
+      color: white;
+    }
+    
+    .template-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+    
+    .info {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+    }
+    
+    canvas {
+      display: block;
+      box-shadow: 0 0 30px rgba(0, 116, 217, 0.3);
+      border-radius: 5px;
+    }
+    
+    .template-info {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 800px;
+    }
+    
+    .template-info h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #39CCCC;
+    }
+    
+    .template-info p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="template-info" id="templateInfo">
+      <h1>Loading template...</h1>
+      <p>Description will appear here</p>
+    </div>
+    
+    <div class="template-selector">
+      <label for="templateSelect" style="font-size: 16px; font-weight: 500;">Select Template:</label>
+      <select id="templateSelect" onchange="switchTemplate()">
+        <option value="">Loading templates...</option>
+      </select>
+    </div>
+    
+    <div class="controls">
+      <button onclick="regenerate()">🔄 New Seed (Random)</button>
+      <button onclick="redraw()">↻ Redraw</button>
+      <label>
+        Seed:
+        <input type="number" id="seedInput" value="12345" min="0" max="2147483647">
+      </label>
+      <button onclick="setSeed()">✓ Set Seed</button>
+    </div>
+    
+    <div id="canvas-container"></div>
+    
+    <div class="info">
+      <p>💡 Click "New Seed" to generate a different variation</p>
+      <p>🎨 Template loaded from: <span id="templatePath">templates/generated/</span></p>
+    </div>
+  </div>
+
+  <script>
+    // Create module shim - make it globally accessible so loaded scripts can use it
+    window.module = { exports: {} };
+    const module = window.module; // Local reference for convenience
+    let p5Instance = null;
+    let currentSeed = 12345;
+    let template = null;
+    let currentTemplatePath = null;
+    
+    // Auto-discover templates from manifest or scan directory
+    async function discoverTemplates() {
+      const discovered = [];
+      
+      // First, try to load from manifest (fastest and most reliable)
+      try {
+        const manifestResponse = await fetch('templates/generated/templates-manifest.json');
+        if (manifestResponse.ok) {
+          const manifest = await manifestResponse.json();
+          console.log(`✅ Loaded ${manifest.length} templates from manifest`);
+          return manifest.map(t => ({
+            path: t.path,
+            name: t.name || t.path.split('/').pop().replace('.js', ''),
+            description: t.description || 'No description'
+          }));
+        }
+      } catch (e) {
+        console.log('Manifest not found, scanning for templates...');
+      }
+      
+      // Fallback: Scan for .meta.json files to discover templates
+      // This is a simplified approach - in a real scenario, you'd want a server endpoint
+      // For now, we'll use a known pattern or manual list
+      const knownBaseNames = [
+        'organic-flowing-patterns',
+        'organic-knitted-granny-square'
+      ];
+      
+      // Try to discover templates by checking for meta.json files
+      // Note: This won't work for all files without a server listing, but we can try common patterns
+      const datePatterns = [
+        '2025-11-01T20-30-38-273Z',
+        '2025-11-01T23-22-44-287Z'
+      ];
+      
+      for (const baseName of knownBaseNames) {
+        // Try recent dates (you could expand this)
+        for (const datePattern of datePatterns) {
+          const templatePath = `templates/generated/${baseName}-${datePattern}.js`;
+          const metaPath = `templates/generated/${baseName}-${datePattern}.meta.json`;
+          
+          try {
+            const response = await fetch(metaPath);
+            if (response.ok) {
+              const meta = await response.json();
+              discovered.push({
+                path: templatePath,
+                name: meta.dsl?.id || baseName,
+                description: meta.dsl?.description || 'No description'
+              });
+              break; // Found this template, move to next
+            }
+          } catch (e) {
+            // Continue searching
+          }
+        }
+      }
+      
+      // If still no templates, try fetching any .meta.json files we can guess
+      // This is a fallback - ideally the manifest should work
+      if (discovered.length === 0) {
+        console.warn('⚠️ No templates found. Make sure templates-manifest.json exists or templates are in the expected location.');
+      }
+      
+      return discovered;
+    }
+    
+    function populateTemplateSelect(templates) {
+      const select = document.getElementById('templateSelect');
+      select.innerHTML = '';
+      
+      if (templates.length === 0) {
+        select.innerHTML = '<option value="">No templates found</option>';
+        return;
+      }
+      
+      templates.forEach((tpl, index) => {
+        const option = document.createElement('option');
+        option.value = tpl.path;
+        option.textContent = tpl.name;
+        option.selected = index === 0; // Select first by default
+        select.appendChild(option);
+      });
+    }
+    
+    function loadTemplate(path) {
+      return new Promise((resolve, reject) => {
+        // Remove any existing template script first
+        const existingScript = document.querySelector(`script[data-template-script]`);
+        if (existingScript) {
+          existingScript.remove();
+        }
+        
+        // Clear module.exports - reset to empty object but keep reference
+        window.module.exports = {};
+        template = null;
+        
+        console.log('Loading template from:', path);
+        
+        // Small delay to ensure previous script is fully removed
+        setTimeout(() => {
+          // Load template via fetch and eval to have better control
+          fetch(path)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+              }
+              return response.text();
+            })
+            .then(templateCode => {
+              try {
+                // Wrap the template code to ensure module references window.module
+                const wrappedCode = `
+                  (function() {
+                    // Ensure module is available
+                    var module = window.module || { exports: {} };
+                    window.module = module;
+                    
+                    ${templateCode}
+                    
+                    // Return the exports
+                    return module.exports;
+                  })();
+                `;
+                
+                // Execute the wrapped code
+                const loadedTemplate = eval(wrappedCode);
+                
+                // Verify it's a valid template
+                if (loadedTemplate && loadedTemplate.render && typeof loadedTemplate.render === 'function') {
+                  console.log('✅ Template loaded successfully:', loadedTemplate.meta?.id);
+                  template = loadedTemplate;
+                  currentTemplatePath = path;
+                  // Also update window.module.exports for compatibility
+                  window.module.exports = loadedTemplate;
+                  resolve(template);
+                } else {
+                  console.error('Invalid template structure:', loadedTemplate);
+                  reject(new Error(`Template not loaded correctly - missing render function. Got: ${JSON.stringify(Object.keys(loadedTemplate || {}))}`));
+                }
+              } catch (evalError) {
+                console.error('Error executing template code:', evalError);
+                reject(new Error(`Template code execution failed: ${evalError.message}. Check for syntax errors in ${path}`));
+              }
+            })
+            .catch(fetchError => {
+              console.error('Failed to fetch template:', fetchError);
+              reject(new Error(`Failed to load template from ${path}: ${fetchError.message}`));
+            });
+        }, 100);
+      });
+    }
+    
+    async function switchTemplate() {
+      const select = document.getElementById('templateSelect');
+      const selectedPath = select.value;
+      
+      if (!selectedPath) return;
+      
+      // Show loading state
+      document.getElementById('templateInfo').innerHTML = '<h1>Loading...</h1><p>Switching template...</p>';
+      
+      try {
+        await loadTemplate(selectedPath);
+        updateTemplateInfo(template);
+        document.getElementById('templatePath').textContent = selectedPath;
+        
+        // Re-render with new template
+        if (p5Instance) {
+          p5Instance.randomSeed(currentSeed);
+          p5Instance.noiseSeed(currentSeed);
+          p5Instance.redraw();
+        }
+      } catch (error) {
+        console.error('Error switching template:', error);
+        document.getElementById('templateInfo').innerHTML = `
+          <h1>Error Loading Template</h1>
+          <p style="color: #ff4136;">${error.message}</p>
+        `;
+      }
+    }
+    
+    function updateTemplateInfo(tpl) {
+      const infoDiv = document.getElementById('templateInfo');
+      if (tpl && tpl.meta) {
+        infoDiv.innerHTML = `
+          <h1>${tpl.meta.id || 'Template'}</h1>
+          <p>${tpl.meta.description || 'No description'}</p>
+        `;
+      }
+    }
+    
+    function regenerate() {
+      currentSeed = Math.floor(Math.random() * 2147483647);
+      document.getElementById('seedInput').value = currentSeed;
+      if (p5Instance) {
+        p5Instance.randomSeed(currentSeed);
+        p5Instance.noiseSeed(currentSeed);
+        p5Instance.redraw();
+      }
+    }
+    
+    function setSeed() {
+      const seedInput = document.getElementById('seedInput');
+      currentSeed = parseInt(seedInput.value) || 12345;
+      if (p5Instance) {
+        p5Instance.randomSeed(currentSeed);
+        p5Instance.noiseSeed(currentSeed);
+        p5Instance.redraw();
+      }
+    }
+    
+    function redraw() {
+      if (p5Instance) {
+        p5Instance.redraw();
+      }
+    }
+    
+    // Initialize
+    async function init() {
+      // Discover and populate templates
+      const templates = await discoverTemplates();
+      populateTemplateSelect(templates);
+      
+      if (templates.length === 0) {
+        document.getElementById('templateInfo').innerHTML = `
+          <h1>No Templates Found</h1>
+          <p style="color: #ff4136;">No templates found in templates/generated/</p>
+        `;
+        return;
+      }
+      
+      // Load first template
+      const firstTemplate = templates[0].path;
+      loadTemplate(firstTemplate)
+        .then((tpl) => {
+          updateTemplateInfo(tpl);
+          document.getElementById('templatePath').textContent = firstTemplate;
+          
+          new p5((p5) => {
+            p5Instance = p5;
+            
+            p5.setup = () => {
+              p5.createCanvas(1024, 1024);
+              p5.colorMode(p5.HSB, 360, 100, 100, 100);
+              p5.noLoop();
+              
+              // Initial render
+              if (template && template.render) {
+                template.render(p5, {}, currentSeed);
+              }
+            };
+            
+            p5.draw = () => {
+              if (template && template.render) {
+                template.render(p5, {}, currentSeed);
+              } else {
+                p5.background(0);
+                p5.fill(255);
+                p5.textAlign(p5.CENTER);
+                p5.text('Template not loaded', p5.width/2, p5.height/2);
+              }
+            };
+            
+            // Click canvas to regenerate
+            p5.mousePressed = () => {
+              if (p5.mouseButton === p5.LEFT) {
+                regenerate();
+              }
+            };
+          }, document.getElementById('canvas-container'));
+        })
+        .catch((error) => {
+          console.error('Error loading template:', error);
+          document.getElementById('templateInfo').innerHTML = `
+            <h1>Error Loading Template</h1>
+            <p style="color: #ff4136;">${error.message}</p>
+            <p style="font-size: 12px; margin-top: 10px;">
+              Make sure the template file path is correct in the script.
+              <br>You may need to serve this file from a local web server.
+            </p>
+          `;
+        });
+    }
+    
+    // Start initialization
+    init();
+  </script>
+  
+  <!-- The template will be loaded dynamically above -->
+</body>
+</html>

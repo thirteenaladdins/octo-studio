@@ -1,0 +1,65 @@
+{
+  "id": "080",
+  "title": "Signal 080: Ripples of Serenity",
+  "description": "A captivating canvas where soft undulating lines create a serene interaction of color and movement, inviting calm reflection.",
+  "date": "2025-11-23",
+  "tags": [
+    "generative",
+    "ai-generated",
+    "grid-pattern",
+    "harmonious",
+    "tranquility",
+    "line"
+  ],
+  "file": "080_ai_signal_1764712517458",
+  "thumbnail": "080_ai_signal_thumb_1764712517458",
+  "category": "generative",
+  "status": "published",
+  "displayMode": "image",
+  "template": "gridPattern",
+  "colors": [
+    "#2980b9",
+    "#f39c12",
+    "#e74c3c",
+    "#2ecc71"
+  ],
+  "movement": "gentle oscillations that shift in rhythmic patterns",
+  "density": 65,
+  "mood": "harmonious tranquility",
+  "seed": 851642383,
+  "config": {
+    "seed": 1628443276,
+    "gridSize": 55,
+    "speed": 0.003,
+    "fade": 0.609,
+    "jitter": 0.08,
+    "shape": "rect",
+    "background": "#1f1f24",
+    "palette": [
+      "#06d6a0",
+      "#ffd166",
+      "#ef476f",
+      "#118ab2"
+    ],
+    "template": "gridPattern",
+    "modules": {
+      "positioning": "grid",
+      "sizing": "noise",
+      "coloring": "time",
+      "transformation": null,
+      "rendering": "shape"
+    },
+    "width": 2400,
+    "height": 2400
+  },
+  "pipeline": [
+    "generateGrid",
+    "noise",
+    "time",
+    "applyShape"
+  ],
+  "imagePath": "/Users/mamer/Projects/octo-studio/output/images/080_ai_signal_1764712517458.png",
+  "thumbnailPath": "/Users/mamer/Projects/octo-studio/output/thumbnails/080_ai_signal_thumb_1764712517458.png",
+  "generatedAt": "2025-12-02T21:55:20.476Z",
+  "timestamp": 1764712517458
+}

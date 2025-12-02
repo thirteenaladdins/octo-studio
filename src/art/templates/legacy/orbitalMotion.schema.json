@@ -1,0 +1,66 @@
+{
+  "title": "Orbital Motion v1",
+  "type": "object",
+  "properties": {
+    "seed": { "type": "integer", "minimum": 1, "default": 7 },
+    "numOrbits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 30,
+      "default": 10
+    },
+    "orbitSpeed": {
+      "type": "number",
+      "minimum": 0.001,
+      "maximum": 0.05,
+      "default": 0.01
+    },
+    "trailFade": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.06
+    },
+    "radiusMin": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 600,
+      "default": 60
+    },
+    "radiusMax": {
+      "type": "number",
+      "minimum": 30,
+      "maximum": 600,
+      "default": 400
+    },
+    "lineWeight": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 6,
+      "default": 2
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{6})$",
+      "default": "#0e0f1a"
+    },
+    "palette": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^#([0-9a-fA-F]{6})$" },
+      "minItems": 3,
+      "maxItems": 5,
+      "default": ["#f72585", "#7209b7", "#3a0ca3", "#4361ee"]
+    }
+  },
+  "required": [
+    "seed",
+    "numOrbits",
+    "orbitSpeed",
+    "trailFade",
+    "radiusMin",
+    "radiusMax",
+    "lineWeight",
+    "background",
+    "palette"
+  ]
+}

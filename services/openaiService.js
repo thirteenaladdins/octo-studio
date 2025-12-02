@@ -1,6 +1,32 @@
 #!/usr/bin/env node
 
 const OpenAI = require("openai");
+const fs = require("fs");
+const path = require("path");
+const { validateConcept } = require("./conceptSchema");
+const templateRegistry = require("../src/templates/registry");
+
+const ALLOWED_TEMPLATES = Object.keys(templateRegistry);
+if (!ALLOWED_TEMPLATES.length) {
+  throw new Error(
+    "Template registry is empty – cannot initialize OpenAI service."
+  );
+}
+
+const TEMPLATE_GUIDELINES = ALLOWED_TEMPLATES.map((template) => {
+  const details = templateRegistry[template] || {};
+  const shapes =
+    Array.isArray(details.capabilities?.shapes) &&
+    details.capabilities.shapes.length
+      ? details.capabilities.shapes.join(", ")
+      : "varied shapes";
+  const animation = details.capabilities?.animation || "varied animation";
+  const interaction = details.capabilities?.interaction
+    ? "; interaction: enabled"
+    : "";
+  const description = details.description || "No description provided";
+  return `- ${template}: ${description} (shapes: ${shapes}; animation: ${animation}${interaction})`;
+}).join("\n");
 
 /**
  * OpenAI Service for generating generative art concepts
@@ -11,13 +37,45 @@ class OpenAIService {
       throw new Error("OpenAI API key is required");
     }
     this.client = new OpenAI({ apiKey });
+    this.logDir = path.join(__dirname, "..", "..", "logs");
+    this.ensureLogDir();
+  }
+
+  ensureLogDir() {
+    if (!fs.existsSync(this.logDir)) {
+      fs.mkdirSync(this.logDir, { recursive: true });
+    }
+  }
+
+  logResponse(concept, fullResponse) {
+    const timestamp = new Date().toISOString();
+    const logEntry = {
+      timestamp,
+      concept,
+      fullResponse: {
+        model: fullResponse.model,
+        usage: fullResponse.usage,
+        finishReason: fullResponse.choices[0].finish_reason,
+        promptTokens: fullResponse.usage.prompt_tokens,
+        completionTokens: fullResponse.usage.completion_tokens,
+        totalTokens: fullResponse.usage.total_tokens,
+      },
+    };
+
+    const logFile = path.join(
+      this.logDir,
+      `llm-${timestamp.split("T")[0]}.jsonl`
+    );
+    fs.appendFileSync(logFile, JSON.stringify(logEntry) + "\n", "utf8");
+
+    console.log(`📝 Logged LLM response to: ${logFile}`);
   }
 
   /**
    * Generate a generative art concept using OpenAI
    * @returns {Promise<Object>} Art concept with shapes, colors, movement, density, mood, title, description
    */
-  async generateArtConcept({ avoid = [], seed = null } = {}) {
+  async generateArtConcept({ avoid = [], seed = null, wordStore = null } = {}) {
     const systemPrompt = `You are a generative art expert specializing in P5.js creative coding. Generate unique, visually interesting concepts for abstract generative artworks.`;
 
     const avoidText =
@@ -27,29 +85,53 @@ class OpenAIService {
           )}`
         : "";
 
+    // Add title word avoidance text
+    let titleWordAvoidanceText = "";
+    if (wordStore && wordStore.overusedWords) {
+      // Generate avoidance text directly without instantiating the class
+      const { overusedWords, recentTitles } = wordStore;
+      if (overusedWords.length > 0) {
+        const wordsToShow = overusedWords.slice(0, 10);
+        titleWordAvoidanceText += `\nAvoid overused title words that appear frequently in recent artworks:\n${wordsToShow
+          .map((w) => `- "${w}"`)
+          .join(", ")}\n`;
+      }
+      if (recentTitles.length > 0) {
+        titleWordAvoidanceText += `\nRecent artwork titles to avoid repeating:\n${recentTitles
+          .slice(-10)
+          .map((t) => `- "${t}"`)
+          .join("\n")}\n`;
+      }
+    }
+
     const seedText = seed != null ? `Creative seed: ${seed}` : "";
 
-    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. ${avoidText}\n${seedText}\n\nReturn ONLY valid JSON with this exact structure:
+    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. Choose whichever template best fits the concept while avoiding recent repetitions. ${avoidText}${titleWordAvoidanceText}\n${seedText}\n
+Available templates:
+${TEMPLATE_GUIDELINES}
+
+Return ONLY valid JSON with this exact structure:
 {
-  "template": "particleSystem" | "gridPattern" | "orbitalMotion" | "flowField" | "noiseWaves" | "geometricGrid" | "ballots",
-  "shapes": ["circle", "rect", "line", "triangle", "ellipse"],
+  "template": "<one of: ${ALLOWED_TEMPLATES.join(", ")}>",
+  "shapes": ["list of 1-5 primary shapes relevant to the chosen template"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
-  "movement": "description of animation pattern (e.g., 'slow orbital drift', 'pulsing expansion', 'flowing waves')",
+  "movement": "description of the animation or motion behaviour (e.g., 'slow flowing streams')",
   "density": 20-100,
   "mood": "1-2 word mood description",
-  "title": "poetic title for the artwork (3-6 words)",
+  "title": "poetic title for the artwork (1-6 words)",
   "description": "brief artistic description (15-25 words)",
-  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Minimalist, #Organic, #Geometric, #Flowing)"]
+  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Organic, #Flowing)"]
 }
 
 Guidelines:
-- Choose template that fits the concept
-- Use 3-5 harmonious colors
-- Movement should be evocative and specific
-- Density should match the template type
-- Title should be evocative but not overly abstract
-- Make each concept unique and visually distinct
-- Hashtags should be single words describing visual style or mood (no spaces, camelCase if needed)`;
+- Template MUST be one of: ${ALLOWED_TEMPLATES.join(", ")}
+- Align shapes and movement with what the chosen template supports
+- Use 3-5 harmonious colors (hex values)
+- Keep density within the 20-100 range and consistent with the template's behaviour
+- Title should be evocative but not overly abstract (1-6 words, can be as short as 1 word)
+- Avoid using overused words from recent artworks - be creative and use fresh vocabulary
+- Ensure each concept feels distinct from the recent avoidance list
+- Hashtags must be single words (no spaces; camelCase if needed)`;
 
     try {
       const response = await this.client.chat.completions.create({
@@ -64,13 +146,36 @@ Guidelines:
       });
 
       const content = response.choices[0].message.content;
-      const concept = JSON.parse(content);
+      const rawConcept = JSON.parse(content);
 
-      // Validate the concept
-      this.validateConcept(concept);
+      // Ensure template stays within the allowed registry
+      if (
+        !rawConcept.template ||
+        !ALLOWED_TEMPLATES.includes(rawConcept.template)
+      ) {
+        console.log(
+          `⚠️  LLM produced unsupported template "${
+            rawConcept.template || "<missing>"
+          }", defaulting to "${ALLOWED_TEMPLATES[0]}"`
+        );
+        rawConcept.template = ALLOWED_TEMPLATES[0];
+      }
 
-      console.log("Generated art concept:", concept.title);
-      return concept;
+      // Validate with Zod schema
+      try {
+        const concept = validateConcept(rawConcept);
+
+        // Log the full response for debugging
+        this.logResponse(concept, response);
+
+        console.log("Generated art concept:", concept.title);
+        return concept;
+      } catch (error) {
+        console.error("❌ Concept validation failed:", error.message);
+        // Log the raw response for debugging even if validation fails
+        this.logResponse(rawConcept, response);
+        throw error;
+      }
     } catch (error) {
       console.error("Error generating art concept:", error.message);
       throw error;
@@ -78,55 +183,35 @@ Guidelines:
   }
 
   /**
-   * Validate that the concept has all required fields
-   * @param {Object} concept - The generated concept
+   * Evaluate an image using GPT-4o Vision
+   * @param {Buffer} imageBuffer - The image buffer to evaluate
+   * @param {string} prompt - Specific evaluation criteria prompt
+   * @returns {Promise<Object>} JSON evaluation result
    */
-  validateConcept(concept) {
-    const required = [
-      "template",
-      "shapes",
-      "colors",
-      "movement",
-      "density",
-      "mood",
-      "title",
-      "description",
-      "hashtags",
-    ];
+  async evaluateImage(imageBuffer, prompt) {
+    const base64Image = imageBuffer.toString('base64');
+    
+    try {
+      const response = await this.client.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: prompt },
+              { type: "image_url", image_url: { url: `data:image/png;base64,${base64Image}` } }
+            ],
+          },
+        ],
+        max_tokens: 500,
+        response_format: { type: "json_object" },
+      });
 
-    for (const field of required) {
-      if (!concept[field]) {
-        throw new Error(`Missing required field: ${field}`);
-      }
-    }
-
-    if (!Array.isArray(concept.shapes) || concept.shapes.length === 0) {
-      throw new Error("Shapes must be a non-empty array");
-    }
-
-    if (!Array.isArray(concept.colors) || concept.colors.length < 3) {
-      throw new Error("Colors must be an array with at least 3 colors");
-    }
-
-    if (typeof concept.density !== "number" || concept.density < 1) {
-      throw new Error("Density must be a positive number");
-    }
-
-    if (!Array.isArray(concept.hashtags) || concept.hashtags.length === 0) {
-      throw new Error("Hashtags must be a non-empty array");
-    }
-
-    const validTemplates = [
-      "particleSystem",
-      "gridPattern",
-      "orbitalMotion",
-      "flowField",
-      "noiseWaves",
-      "geometricGrid",
-      "ballots",
-    ];
-    if (!validTemplates.includes(concept.template)) {
-      throw new Error(`Invalid template: ${concept.template}`);
+      const content = response.choices[0].message.content;
+      return JSON.parse(content);
+    } catch (error) {
+      console.error("Error evaluating image:", error.message);
+      throw error;
     }
   }
 }

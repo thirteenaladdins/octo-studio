@@ -1,0 +1,67 @@
+{
+  "title": "Lightning v1",
+  "type": "object",
+  "properties": {
+    "seed": { "type": "integer", "minimum": 1, "default": 42 },
+    "count": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 700,
+      "default": 600
+    },
+    "step": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 3,
+      "default": 2.5
+    },
+    "noiseScale": {
+      "type": "number",
+      "minimum": 0.005,
+      "maximum": 0.02,
+      "default": 0.015
+    },
+    "zSpeed": {
+      "type": "number",
+      "minimum": 0.0001,
+      "maximum": 0.005,
+      "default": 0.0008
+    },
+    "strokeWeight": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4,
+      "default": 2
+    },
+    "strokeAlpha": {
+      "type": "number",
+      "minimum": 20,
+      "maximum": 60,
+      "default": 45
+    },
+    "background": {
+      "type": "string",
+      "pattern": "^#([0-9a-fA-F]{6})$",
+      "default": "#001f3f"
+    },
+    "palette": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^#([0-9a-fA-F]{6})$" },
+      "minItems": 3,
+      "maxItems": 5,
+      "default": ["#0074D9", "#39CCCC", "#2ECC40", "#FF4136"]
+    }
+  },
+  "required": [
+    "seed",
+    "count",
+    "step",
+    "noiseScale",
+    "zSpeed",
+    "strokeWeight",
+    "strokeAlpha",
+    "background",
+    "palette"
+  ]
+}
+

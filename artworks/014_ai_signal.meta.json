@@ -1,0 +1,48 @@
+{
+  "id": "014",
+  "seed": 1279461646,
+  "timestamp": "2025-11-28T20:58:59.973Z",
+  "concept": {
+    "title": "Canvas of Whimsy",
+    "template": "particleSystem",
+    "description": "An enchanting dance of colorful particles, swirling through space, creating a lively interplay of light and form.",
+    "mood": "dynamic, playful",
+    "shapes": [
+      "circle",
+      "ellipse"
+    ],
+    "colors": [
+      "#A3D9C9",
+      "#F6B93B",
+      "#EB5757",
+      "#6D2E24"
+    ],
+    "movement": "gentle swirling with occasional bursts of color intensity",
+    "density": 65,
+    "hashtags": [
+      "#Dynamic",
+      "#Playful",
+      "#ParticleArt"
+    ]
+  },
+  "config": {
+    "seed": 9,
+    "numParticles": 1202,
+    "maxSpeed": 6.26,
+    "cohesion": 1.577,
+    "separation": 1.626,
+    "alignment": 0.885,
+    "trailFade": 0.629,
+    "background": "#0a0a0e",
+    "palette": [
+      "#ffbe0b",
+      "#fb5607",
+      "#ff006e",
+      "#8338ec"
+    ],
+    "template": "particleSystem"
+  },
+  "model": "gpt-4o-mini",
+  "temperature": 0.95,
+  "presencePenalty": 0.8
+}

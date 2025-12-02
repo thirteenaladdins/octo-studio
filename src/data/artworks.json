@@ -1,0 +1,159 @@
+{
+  "artworks": [
+    {
+      "id": "014",
+      "title": "Signal 014: Canvas of Whimsy",
+      "description": "An enchanting dance of colorful particles, swirling through space, creating a lively interplay of light and form.",
+      "date": "2025-11-28",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "dynamic,",
+        "playful",
+        "circle"
+      ],
+      "file": "014_ai_signal",
+      "thumbnail": "014_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#A3D9C9",
+        "#F6B93B",
+        "#EB5757",
+        "#6D2E24"
+      ],
+      "movement": "gentle swirling with occasional bursts of color intensity",
+      "density": 65,
+      "mood": "dynamic, playful",
+      "seed": 1279461646,
+      "config": {
+        "seed": 9,
+        "palette": [
+          "#ffbe0b",
+          "#fb5607",
+          "#ff006e",
+          "#8338ec"
+        ],
+        "cohesion": 1.577,
+        "maxSpeed": 6.26,
+        "template": "particleSystem",
+        "alignment": 0.885,
+        "trailFade": 0.629,
+        "background": "#0a0a0e",
+        "separation": 1.626,
+        "numParticles": 1202
+      },
+      "imageUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/images/014_ai_signal.png",
+      "thumbnailUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/thumbnails/014_ai_signal.png"
+    },
+    {
+      "id": "013",
+      "title": "Signal 013: Luminous Echoes",
+      "description": "An enchanting dance of particles, reminiscent of ethereal blossoms unfurling and tracing delicate paths in the air.",
+      "date": "2025-11-26",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "mystical,",
+        "whimsical",
+        "circle"
+      ],
+      "file": "013_ai_signal",
+      "thumbnail": "013_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "flowField",
+      "colors": [
+        "#6A0572",
+        "#9D50B0",
+        "#EAB8E4",
+        "#FFD1DC"
+      ],
+      "movement": "swirling clusters with radiant trails fading away",
+      "density": 78,
+      "mood": "mystical, whimsical",
+      "seed": 1111633252,
+      "config": {
+        "seed": 6,
+        "speed": 0.035,
+        "steps": 52,
+        "density": 132,
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
+        "template": "flowField",
+        "background": "#26262b",
+        "noiseScale": 0.021,
+        "strokeAlpha": 89.296,
+        "strokeWeight": 5.553,
+        "strokeBrightness": 89.004,
+        "strokeSaturation": 30.948
+      },
+      "imageUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/images/013_ai_signal.png",
+      "thumbnailUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/thumbnails/013_ai_signal.png"
+    },
+    {
+      "id": "015",
+      "title": "Signal 015: Ebb and Flow",
+      "description": "An exploration of serenity through soft wave patterns that ebb and flow, evoking a tranquil state of mind.",
+      "date": "2025-11-29",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "noise-waves",
+        "serene,",
+        "fluid",
+        "line"
+      ],
+      "file": "015_ai_signal",
+      "thumbnail": "015_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "noiseWaves",
+      "colors": [
+        "#1B2A6E",
+        "#D9B08C",
+        "#F7C9A2",
+        "#AEEEEE"
+      ],
+      "movement": "gentle undulating waves with rhythmic peaks and troughs",
+      "density": 75,
+      "mood": "serene, fluid",
+      "seed": 1362229832,
+      "config": {
+        "seed": 10,
+        "frequency": 3.54,
+        "amplitude": 105.594,
+        "bands": 3,
+        "speed": 0.03,
+        "lineWeight": 2.851,
+        "fade": 0.5,
+        "background": "#0b0b12",
+        "palette": [
+          "#90e0ef",
+          "#48cae4",
+          "#00b4d8",
+          "#03045e"
+        ],
+        "template": "noiseWaves"
+      },
+      "imageUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/images/015_ai_signal.png",
+      "thumbnailUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/thumbnails/015_ai_signal.png"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-11-29T19:58:35.399Z",
+    "totalArtworks": 3,
+    "publishedArtworks": 3,
+    "draftArtworks": 0
+  }
+}

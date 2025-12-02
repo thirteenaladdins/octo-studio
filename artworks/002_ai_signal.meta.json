@@ -1,0 +1,48 @@
+{
+  "id": "002",
+  "seed": 1022720060,
+  "timestamp": "2025-11-25T21:39:57.691Z",
+  "concept": {
+    "title": "Ballooning Dreams",
+    "template": "particleSystem",
+    "description": "Ethereal particles rise and pop, creating a playful atmosphere reminiscent of colorful balloons dancing in the sky.",
+    "mood": "playful, vibrant",
+    "shapes": [
+      "circle",
+      "ellipse"
+    ],
+    "colors": [
+      "#D5AAFF",
+      "#7B5BFF",
+      "#F1C40F",
+      "#FF7F50"
+    ],
+    "movement": "bubbling ascent with occasional bursts of energy",
+    "density": 75,
+    "hashtags": [
+      "#Particles",
+      "#Energetic",
+      "#Playful"
+    ]
+  },
+  "config": {
+    "seed": 6,
+    "numParticles": 2961,
+    "maxSpeed": 2.763,
+    "cohesion": 1.16,
+    "separation": 1.365,
+    "alignment": 1.163,
+    "trailFade": 0.084,
+    "background": "#0a0a0e",
+    "palette": [
+      "#ffbe0b",
+      "#fb5607",
+      "#ff006e",
+      "#8338ec"
+    ],
+    "template": "particleSystem"
+  },
+  "model": "gpt-4o-mini",
+  "temperature": 0.95,
+  "presencePenalty": 0.8
+}
