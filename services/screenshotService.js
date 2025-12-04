@@ -333,17 +333,9 @@ class ScreenshotService {
     captureFrame = 180,
     resolution = 2400
   ) {
-    // Map template names to runtime template file names
-    const templateMap = {
-      gridPattern: "gridPatternModularRuntime",
-      simpleModular: "gridPatternRuntime", // Uses gridPattern runtime
-      noiseWaves: "noiseWavesRuntime",
-      universalModular: "UniversalModularRuntime",
-      UniversalModular: "UniversalModularRuntime",
-      pipeline: "pipelineRuntime",
-    };
+    // All templates now use pipeline runtime
+    const templateFileName = "pipelineRuntime";
 
-    const templateFileName = templateMap[template] || `${template}Runtime`;
     // Try multiple potential locations for the template
     const possiblePaths = [
       path.join(__dirname, "../../src/templates", `${templateFileName}.js`),
@@ -373,12 +365,7 @@ class ScreenshotService {
     // Read and process the runtime template code
     let templateCode = fs.readFileSync(templatePath, "utf8");
 
-    // Handle modular runtime with ES module imports
-    if (templatePath.includes("ModularRuntime")) {
-      // Inline all module dependencies
-      templateCode = this.inlineModuleImports(templateCode, templatePath);
-    }
-
+    // pipelineRuntime.js doesn't have ES module imports, so no inlining needed
     // Remove ES module export and convert to function that can be called
     // Replace "export default function" with "function"
     templateCode = templateCode.replace(

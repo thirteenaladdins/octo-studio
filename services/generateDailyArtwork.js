@@ -56,6 +56,80 @@ function parseArgs() {
   return args;
 }
 
+/**
+ * Convert any template config to pipeline format
+ * @param {Object} config - Original config from templateConfigService
+ * @param {string} template - Template name (gridPattern, noiseWaves, etc.)
+ * @param {number} seed - Random seed
+ * @returns {Object} Config with _pipelineState embedded
+ */
+function convertConfigToPipeline(config, template, seed) {
+  const { buildPipeline } = require("../src/pipeline/builder");
+  const { executePipeline } = require("../src/pipeline/pipeline");
+  const { createInitialState } = require("../src/pipeline/state");
+
+  // Extract or create modules based on template type
+  let modules = config.modules;
+  
+  if (!modules) {
+    // Default modules based on template type
+    if (template === "gridPattern") {
+      modules = {
+        positioning: "grid",
+        sizing: "noise",
+        coloring: "time",
+        transformation: config.jitter > 0 ? "jitter" : null,
+        rendering: "shape"
+      };
+    } else if (template === "noiseWaves") {
+      // For noiseWaves, use noise-based modules
+      modules = {
+        positioning: "grid",
+        sizing: "noise",
+        coloring: "noise",
+        transformation: "noiseOffset",
+        rendering: "shape"
+      };
+    } else {
+      // Default modules for any other template
+      modules = {
+        positioning: "grid",
+        sizing: "noise",
+        coloring: "palette",
+        transformation: null,
+        rendering: "shape"
+      };
+    }
+  } else {
+    // Ensure transformation key matches pipeline registry (it uses 'transformation' not 'transform')
+    if (modules.transform && !modules.transformation) {
+      modules.transformation = modules.transform;
+      delete modules.transform;
+    }
+  }
+
+  // Build pipeline from modules
+  const pipeline = buildPipeline(modules);
+  
+  // Create initial state with full config
+  const initialState = createInitialState({
+    ...config,
+    width: 2400,
+    height: 2400,
+    seed: seed
+  });
+  
+  // Execute pipeline
+  const finalState = executePipeline(pipeline, initialState);
+  
+  // Return config with embedded pipeline state
+  return {
+    ...config,
+    _pipelineState: finalState,
+    template: "pipeline" // Always use pipeline template
+  };
+}
+
 async function main() {
   const args = parseArgs();
   const isDryRun = args.dryRun;
@@ -202,6 +276,14 @@ async function main() {
     console.log(`   Config generated:`, JSON.stringify(config, null, 2));
     console.log(`   Seed: ${normalizedSeed}`);
 
+    // Convert config to pipeline format
+    console.log("\n🔧 Converting config to pipeline format...");
+    const pipelineConfig = convertConfigToPipeline(config, concept.template, normalizedSeed);
+    console.log(`   ✅ Pipeline built and executed (${pipelineConfig._pipelineState.elements.length} elements)`);
+
+    // Use pipelineConfig from now on instead of config
+    const finalConfig = pipelineConfig;
+
     // 5.5. Store metadata for reproducibility
     const metaDir = path.join(rootDir, "artworks");
     if (!fs.existsSync(metaDir)) {
@@ -213,7 +295,7 @@ async function main() {
       seed: normalizedSeed,
       timestamp: new Date().toISOString(),
       concept,
-      config,
+      config: finalConfig, // Use pipeline config
       model: "gpt-4o-mini",
       temperature: 0.95,
       presencePenalty: 0.8,
@@ -247,7 +329,7 @@ async function main() {
       mood: concept.mood,
       // Store full config and seed for parameter-based rendering
       seed: normalizedSeed,
-      config: config,
+      config: finalConfig, // Use pipeline config
       // Image URLs will be added after upload
       imageUrl: null,
       thumbnailUrl: null,
@@ -281,11 +363,11 @@ async function main() {
     await storageService.saveMetadata(artworks);
     console.log(`   Metadata updated`);
 
-    // 9. Capture full-size screenshot from config using runtime template
+    // 9. Capture full-size screenshot from config using pipeline runtime
     console.log("\n📸 Capturing full-size screenshot from config...");
     const fullSizeBuffer = await screenshotService.captureFromConfig(
-      concept.template,
-      config,
+      "pipeline", // Always use pipeline template
+      finalConfig, // Use pipeline config
       sketchFileName,
       180, // Capture at frame 180 (~3 seconds at 60fps) for consistency
       2400 // Full-size resolution: 2400x2400
